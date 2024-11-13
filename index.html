@@ -3,13 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mon Unit Push</title>
+    <title>Cabinet Sour'Yon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybffB2wO1dZNg3jc2p0eWmZi5mUg+Y/pdP0ECm2uhgZz8AWy4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-OiMy8Z5Y+AOiFf+T/6TcGx8Oh4TR3s8XgdgUapBBOOykHReA5XKpRvHzJtU1NT8w" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <div class="test">
-        Test
-    </div>
+    <header class="hero-section text-center position-relative">
+        <img src="ressources/images/logo.png" alt="Logo Sour'Yon" class="img-fluid logo-souryon">
+        <a href="index-eng.html" class="image-button">
+            <img src="ressources/images/france_flag.png">
+        </a>
+        <a href="#" class="emergency-button" data-bs-toggle="offcanvas" data-bs-target="#emergencyCanvas" aria-controls="emergencyCanvas">Consignes d'urgence</a>
+        <div class="info-bar"><strong>Bienvenue au Cabinet Sour'Yon</strong></div>
+    </header>
+    <section class="text-box parallax-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12 text-center">
+                    <p><strong>Toute l'équipe du cabinet Sour'Yon</strong> vous accueille pour la prise en charge des pathologies de la bouche et du visage au sein de la <strong>Clinique Saint Charles</strong>, <strong>11 boulevard René Levesque, 85000 La Roche sur Yon</strong>.</p>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <img src="ressources/images/whole-team.png" class="img-fluid mb-4 teamimg" alt="Équipe Sour'Yon">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-box2">
+        <div class="container text-center">
+            <iframe class="mb-4" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2738.4274240885766!2d-1.4168598231074867!3d46.65782187111852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48042ffa94e4789d%3A0x85b8f574f24b21cd!2sClinique%20Saint%20Charles!5e0!3m2!1sfr!2sfr!4v1729124701311!5m2!1sfr!2sfr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <p><strong>Nos secrétaires</strong> <strong>Sophie</strong>, <strong>Sylvia</strong> et <strong>Dominique</strong> assurent une permanence au cabinet du lundi au vendredi, de <strong>8h à 12h</strong> et de <strong>14h à 18h</strong>, notre secrétariat est joignable à ces horaires au <strong>02 51 44 44 95</strong>, pour les prises de rendez-vous ou par <a href="https://www.doctolib.fr/cabinet-medical/la-roche-sur-yon/stomatologistes-clinique-saint-charles" target="_blank"><strong>Doctolib</strong></a> pour les docteurs <a href="https://www.doctolib.fr/stomatologue/la-roche-sur-yon/gerard-llabres" target="_blank"><strong>LLABRES</strong></a>, <a href="https://www.doctolib.fr/chirurgien-maxillo-facial-et-stomatologiste/la-roche-sur-yon/mathieu-gerard?pid=establishment-6732" target="_blank"><strong>GERARD</strong></a> et <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank"><strong>GUILLEMIN</strong></a>.</p>
+            <p><strong>Nos infirmiers et aides opératoires</strong> assureront votre accueil au bloc et votre suivi pendant toutes les interventions chirurgicales sous anesthésies locales ou générales.</p>
+        </div>
+    </section>
+    <section class="carousel-section banner-photo">
+        <img src="ressources/images/carrousel1.webp" class="d-block w-100 carrousel-img" alt="">
+    </section>
+    <section class="card-container container">
+        <div class="card" style="width: 25rem;">
+            <img src="ressources/images/matmat.jpg" class="card-img-top card-img-custom" alt="">
+            <div class="card-body">
+                <h5 class="card-title"><strong>Docteur Gerard</strong></h5>
+                <ul>
+                    <li><strong>Chirurgien maxillo-facial et stomatologue</strong>, spécialisé dans la chirurgie du visage, la cancérologie, l'orthognathie, et la chirurgie reconstructrice.</li>
+                </ul>
+                <a href="DrGerard.html" class="btn card-button custom-button">En savoir plus</a>
+            </div>
+        </div>
+        <div class="card" style="width: 25rem;">
+            <img src="ressources/images/DrLlabres.jpg" class="card-img-top card-photo card-img-custom" alt="">
+            <div class="card-body">
+                <h5 class="card-title"><strong>Docteur LLABRES</strong></h5>
+                <ul>
+                    <li><strong>Stomatologue</strong>, pratique la chirurgie buccale et le traitement de l'apnée du sommeil, il exerce en secteur 1.</li>
+                </ul>
+                <a href="DrLlabres.html" class="btn card-button custom-button">En savoir plus</a>
+            </div>
+        </div>
+        <div class="card" style="width: 25rem;">
+            <img src="ressources/images/DrGuillemin.jpg" class="card-img-top card-photo card-img-custom" alt="">
+            <div class="card-body">
+                <h5 class="card-title"><strong>Docteur GUILLEMIN</strong></h5>
+                <ul>
+                    <li><strong>Chirurgien oral</strong>, pratique la chirurgie buccale et l'implantologie, il exerce en secteur 2.</li>
+                </ul>
+                <a href="DrGuillemin.html" class="btn card-button custom-button">En savoir plus</a>
+            </div>
+        </div>
+    </section>
+    <section class="important-banner container text-center">
+        <h5><i class="bi bi-exclamation-triangle-fill icon me-2"></i><strong>Important</strong></h5>
+        <p class="mt-3">Toute intervention chirurgicale devra obligatoirement être précédée d'une consultation sur rendez-vous pour laquelle vous devrez impérativement vous munir :</p>
+        <ul class="list-unstyled">
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Du <strong>courrier de votre médecin</strong>, dentiste ou orthodontiste indiquant le motif de consultation</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De vos <strong>radiographies</strong>, notamment panoramique dentaire (un cliché de TOUTES les dents) pour des problèmes buccaux</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De l'<strong>ordonnance de vos traitements quotidiens habituels</strong> si vous en prenez</li>
+            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De l'<strong>attestation adéquate</strong> si vous êtes bénéficiaires de la CMU, CSS, ACS ou AME</li>
+            <li class="mt-3"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>En cas de <strong>contretemps</strong>, merci de prévenir le cabinet médical de votre absence au moins <strong>48 heures auparavant</strong>, toute absence injustifiée pouvant interdire définitivement toute nouvelle prise de rendez-vous.</li>
+        </ul>
+    </section>
+    <footer class="footer text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2023 Cabinet Médical Sour'Yon. Tous droits réservés.</p>
+            <p><a href="#" class="text-white me-2">Mentions Légales</a> | <a href="#" class="text-white">Politique de Confidentialité</a></p>
+        </div>
+    </footer>
 </body>
 </html>
