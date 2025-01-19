@@ -1,95 +1,594 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cabinet Sour'Yon</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybffB2wO1dZNg3jc2p0eWmZi5mUg+Y/pdP0ECm2uhgZz8AWy4" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-OiMy8Z5Y+AOiFf+T/6TcGx8Oh4TR3s8XgdgUapBBOOykHReA5XKpRvHzJtU1NT8w" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cabinet Sour'Yon</title>
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-secondary: #f7f9fc;
+      --bg-card: #ffffff;
+      --text-main: #333333;
+      --text-secondary: #666666;
+      --accent-blue: #1176c0;
+      --accent-red: #ff0000;
+      --font-main: 'Montserrat', sans-serif;
+      --transition-speed: 0.3s;
+      --box-shadow-default: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: var(--accent-blue);
+      transition: color var(--transition-speed);
+    }
+    a:hover {
+      color: #0e5a8a;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: normal;
+      color: var(--text-main);
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style: none;
+      margin: 10px 0;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 8px;
+      padding-left: 25px;
+      position: relative;
+    }
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    header {
+      background-color: #fdfdfd;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      box-shadow: var(--box-shadow-default);
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .logo-cabinet {
+      width: 180px;
+      display: block;
+    }
+    .lang-switch {
+      width: 40px;
+      height: auto;
+    }
+    .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .emergency-button {
+      background-color: var(--accent-red);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: background var(--transition-speed);
+      border: none;
+      cursor: pointer;
+      animation: pulse 1.8s infinite;
+    }
+    .emergency-button:hover {
+      background-color: #cc0000;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,0,0, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 20px rgba(255,0,0, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,0,0, 0);
+      }
+    }
+    .offcanvas-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      z-index: 1000;
+    }
+    .offcanvas-overlay.show {
+      display: block;
+    }
+    .offcanvas {
+      position: fixed;
+      top: 0;
+      left: -300px;
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      transition: left var(--transition-speed) ease;
+      z-index: 1001;
+      overflow-y: auto;
+    }
+    .offcanvas.open {
+      left: 0;
+    }
+    .offcanvas h3 {
+      margin-bottom: 10px;
+      color: var(--accent-blue);
+    }
+    .offcanvas p {
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+    }
+    .offcanvas-close {
+      display: inline-block;
+      background: none;
+      border: none;
+      color: var(--accent-blue);
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: color var(--transition-speed);
+    }
+    .offcanvas-close:hover {
+      color: #0e5a8a;
+    }
+    .top-section {
+      position: relative;
+      min-height: 400px;
+      padding: 60px 20px;
+      background-color: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: var(--box-shadow-default);
+    }
+    .top-section h1 {
+      font-size: 2.4rem;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      z-index: 2;
+      position: relative;
+    }
+    .top-section p {
+      max-width: 600px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0 auto;
+      z-index: 2;
+      position: relative;
+    }
+    .top-section::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 1;
+    }
+    .top-section::after {
+      content: "";
+      position: absolute;
+      bottom: -120px;
+      right: -120px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.15;
+      z-index: 1;
+    }
+    .section-content {
+      background-color: var(--bg-secondary);
+      padding: 50px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+    }
+    .section-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--accent-blue);
+      position: relative;
+      text-transform: uppercase;
+    }
+    .section-content h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-blue);
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .section-content p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .flex-equipe {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
+    .flex-equipe .col-text {
+      flex: 1 1 400px;
+    }
+    .flex-equipe .col-img {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+    .teamimg {
+      max-width: 400px;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .map-section {
+      background-color: var(--bg-secondary);
+      padding: 50px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      text-align: center;
+    }
+    .map-section iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      margin-bottom: 20px;
+    }
+    .map-section p {
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    .map-section h2 {
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .banner-photo {
+      margin: 40px 0;
+      text-align: center;
+    }
+    .banner-photo img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      object-position: 50% 100%;
+      box-shadow: var(--box-shadow-default);
+    }
+    .cards {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 20px;
+    }
+    .card {
+      background-color: var(--bg-card);
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: var(--box-shadow-default);
+      transition: transform var(--transition-speed) ease, 
+                  box-shadow var(--transition-speed) ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .card img {
+      border-radius: 6px;
+      margin-bottom: 15px;
+      max-height: 300px;
+      object-fit: cover;
+      object-position: 50% 0%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      margin-bottom: 10px;
+      color: var(--accent-blue);
+      font-size: 1.3rem;
+    }
+    .card ul {
+      margin: 10px 0 20px 0;
+      color: var(--text-secondary);
+    }
+    .card a {
+      background-color: var(--accent-blue);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: fit-content;
+      transition: background-color var(--transition-speed);
+    }
+    .card a:hover {
+      background-color: #0e5a8a;
+    }
+    .important-banner {
+      background-color: #f9c74f;
+      margin: 20px auto;
+      max-width: 1200px;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+    }
+    .important-banner h4 {
+      color: var(--accent-red);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+    }
+    .important-banner p {
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    .important-banner li {
+      color: var(--text-main);
+    }
+    .important-banner li::before {
+      color: var(--accent-red);
+    }
+    footer {
+      background-color: #fdfdfd;
+      padding: 20px;
+      text-align: center;
+      color: var(--text-secondary);
+      box-shadow: var(--box-shadow-default);
+      margin-top: 40px;
+    }
+    footer a {
+      color: var(--accent-blue);
+      margin: 0 10px;
+      font-size: 0.9rem;
+      transition: color var(--transition-speed);
+    }
+    footer a:hover {
+      color: #0e5a8a;
+    }
+    footer p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    @media (max-width: 768px) {
+      .top-section {
+        min-height: 300px;
+        padding: 40px 15px;
+      }
+      .top-section h1 {
+        font-size: 2rem;
+      }
+      .top-section p {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
-    <header class="hero-section text-center position-relative">
-        <img src="ressources/images/logo.png" alt="Logo Sour'Yon" class="img-fluid logo-souryon">
-        <a href="index-eng.html" class="image-button">
-            <img src="ressources/images/france_flag.png">
-        </a>
-        <a href="#" class="emergency-button" data-bs-toggle="offcanvas" data-bs-target="#emergencyCanvas" aria-controls="emergencyCanvas">Consignes d'urgence</a>
-        <div class="info-bar"><strong>Bienvenue au Cabinet Sour'Yon</strong></div>
-    </header>
-    <section class="text-box parallax-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-12 text-center">
-                    <p><strong>Toute l'équipe du cabinet Sour'Yon</strong> vous accueille pour la prise en charge des pathologies de la bouche et du visage au sein de la <strong>Clinique Saint Charles</strong>, <strong>11 boulevard René Levesque, 85000 La Roche sur Yon</strong>.</p>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <img src="ressources/images/whole-team.png" class="img-fluid mb-4 teamimg" alt="Équipe Sour'Yon">
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="text-box2">
-        <div class="container text-center">
-            <iframe class="mb-4" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2738.4274240885766!2d-1.4168598231074867!3d46.65782187111852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48042ffa94e4789d%3A0x85b8f574f24b21cd!2sClinique%20Saint%20Charles!5e0!3m2!1sfr!2sfr!4v1729124701311!5m2!1sfr!2sfr" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            <p><strong>Nos secrétaires</strong> <strong>Sophie</strong>, <strong>Sylvia</strong> et <strong>Dominique</strong> assurent une permanence au cabinet du lundi au vendredi, de <strong>8h à 12h</strong> et de <strong>14h à 18h</strong>, notre secrétariat est joignable à ces horaires au <strong>02 51 44 44 95</strong>, pour les prises de rendez-vous ou par <a href="https://www.doctolib.fr/cabinet-medical/la-roche-sur-yon/stomatologistes-clinique-saint-charles" target="_blank"><strong>Doctolib</strong></a> pour les docteurs <a href="https://www.doctolib.fr/stomatologue/la-roche-sur-yon/gerard-llabres" target="_blank"><strong>LLABRES</strong></a>, <a href="https://www.doctolib.fr/chirurgien-maxillo-facial-et-stomatologiste/la-roche-sur-yon/mathieu-gerard?pid=establishment-6732" target="_blank"><strong>GERARD</strong></a> et <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank"><strong>GUILLEMIN</strong></a>.</p>
-            <p><strong>Nos infirmiers et aides opératoires</strong> assureront votre accueil au bloc et votre suivi pendant toutes les interventions chirurgicales sous anesthésies locales ou générales.</p>
-        </div>
-    </section>
-    <section class="carousel-section banner-photo">
-        <img src="ressources/images/carrousel1.webp" class="d-block w-100 carrousel-img" alt="">
-    </section>
-    <section class="card-container container">
-        <div class="card" style="width: 25rem;">
-            <img src="ressources/images/matmat.jpg" class="card-img-top card-img-custom" alt="">
-            <div class="card-body">
-                <h5 class="card-title"><strong>Docteur Gerard</strong></h5>
-                <ul>
-                    <li><strong>Chirurgien maxillo-facial et stomatologue</strong>, spécialisé dans la chirurgie du visage, la cancérologie, l'orthognathie, et la chirurgie reconstructrice.</li>
-                </ul>
-                <a href="DrGerard.html" class="btn card-button custom-button">En savoir plus</a>
-            </div>
-        </div>
-        <div class="card" style="width: 25rem;">
-            <img src="ressources/images/DrLlabres.jpg" class="card-img-top card-photo card-img-custom" alt="">
-            <div class="card-body">
-                <h5 class="card-title"><strong>Docteur LLABRES</strong></h5>
-                <ul>
-                    <li><strong>Stomatologue</strong>, pratique la chirurgie buccale et le traitement de l'apnée du sommeil, il exerce en secteur 1.</li>
-                </ul>
-                <a href="DrLlabres.html" class="btn card-button custom-button">En savoir plus</a>
-            </div>
-        </div>
-        <div class="card" style="width: 25rem;">
-            <img src="ressources/images/DrGuillemin.jpg" class="card-img-top card-photo card-img-custom" alt="">
-            <div class="card-body">
-                <h5 class="card-title"><strong>Docteur GUILLEMIN</strong></h5>
-                <ul>
-                    <li><strong>Chirurgien oral</strong>, pratique la chirurgie buccale et l'implantologie, il exerce en secteur 2.</li>
-                </ul>
-                <a href="DrGuillemin.html" class="btn card-button custom-button">En savoir plus</a>
-            </div>
-        </div>
-    </section>
-    <section class="important-banner container text-center">
-        <h5><i class="bi bi-exclamation-triangle-fill icon me-2"></i><strong>Important</strong></h5>
-        <p class="mt-3">Toute intervention chirurgicale devra obligatoirement être précédée d'une consultation sur rendez-vous pour laquelle vous devrez impérativement vous munir :</p>
-        <ul class="list-unstyled">
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>Du <strong>courrier de votre médecin</strong>, dentiste ou orthodontiste indiquant le motif de consultation</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De vos <strong>radiographies</strong>, notamment panoramique dentaire (un cliché de TOUTES les dents) pour des problèmes buccaux</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De l'<strong>ordonnance de vos traitements quotidiens habituels</strong> si vous en prenez</li>
-            <li><i class="bi bi-check-circle-fill text-success me-2"></i>De l'<strong>attestation adéquate</strong> si vous êtes bénéficiaires de la CMU, CSS, ACS ou AME</li>
-            <li class="mt-3"><i class="bi bi-exclamation-circle-fill text-danger me-2"></i>En cas de <strong>contretemps</strong>, merci de prévenir le cabinet médical de votre absence au moins <strong>48 heures auparavant</strong>, toute absence injustifiée pouvant interdire définitivement toute nouvelle prise de rendez-vous.</li>
+  <header>
+    <div class="logo-container">
+      <img src="ressources/images/logo.png" alt="Logo Sour'Yon" class="logo-cabinet" />
+    </div>
+    <div class="actions-right">
+      <a href="index-eng.html">
+        <img src="ressources/images/france_flag.png" alt="FR" class="lang-switch" />
+      </a>
+      <button class="emergency-button" id="btn-emergency">
+        Consignes d'urgence
+      </button>
+    </div>
+  </header>
+  <div class="offcanvas-overlay" id="offcanvas-overlay"></div>
+  <div class="offcanvas" id="offcanvas">
+    <button class="offcanvas-close" id="offcanvas-close">Fermer X</button>
+    <h3>Consignes d'urgence</h3>
+    <p>
+      Voici un espace dédié pour lister toutes les consignes d’urgence ou 
+      les numéros à appeler en cas de problème, etc.
+    </p>
+  </div>
+  <section class="top-section">
+    <h1>Bienvenue au Cabinet Sour'Yon</h1>
+    <p>
+      Spécialisé dans la prise en charge des pathologies de la bouche et du 
+      visage, notre équipe vous accueille pour des consultations et 
+      interventions au sein de la Clinique Saint Charles, à La Roche sur Yon.
+    </p>
+  </section>
+  <section class="section-content">
+    <h2>Notre Équipe</h2>
+    <div class="flex-equipe">
+      <div class="col-text">
+        <p>
+          <strong>Toute l'équipe du cabinet Sour'Yon</strong> vous accueille pour 
+          la prise en charge des pathologies de la bouche et du visage au sein de la 
+          <strong>Clinique Saint Charles</strong>, 
+          <strong>11 boulevard René Levesque, 85000 La Roche sur Yon</strong>.
+        </p>
+        <p>
+          <strong>Nos infirmiers et aides opératoires</strong> vous accompagnent 
+          au bloc et assurent votre suivi pendant toutes les interventions chirurgicales 
+          sous anesthésies locales ou générales.
+        </p>
+      </div>
+      <div class="col-img">
+        <img 
+          src="ressources/images/whole-team.png" 
+          alt="Équipe Sour'Yon" 
+          class="teamimg"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="map-section">
+    <h2>Secrétariat & Localisation</h2>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2738.4274240885766!2d-1.4168598231074867!3d46.65782187111852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48042ffa94e4789d%3A0x85b8f574f24b21cd!2sClinique%20Saint%20Charles!5e0!3m2!1sfr!2sfr!4v1729124701311!5m2!1sfr!2sfr"
+      loading="lazy">
+    </iframe>
+    <p>
+      <strong>Nos secrétaires Sophie, Sylvia et Dominique</strong> assurent 
+      une permanence au cabinet du lundi au vendredi, de <strong>8h à 12h</strong> 
+      et de <strong>14h à 18h</strong>.<br>
+      Notre secrétariat est joignable au <strong>02 51 44 44 95</strong> 
+      pour la prise de rendez-vous, ou via 
+      <a href="https://www.doctolib.fr/cabinet-medical/la-roche-sur-yon/stomatologistes-clinique-saint-charles" target="_blank">
+        <strong>Doctolib</strong>
+      </a> pour les docteurs 
+      <a href="https://www.doctolib.fr/stomatologue/la-roche-sur-yon/gerard-llabres" target="_blank"><strong>LLABRES</strong></a>, 
+      <a href="https://www.doctolib.fr/chirurgien-maxillo-facial-et-stomatologiste/la-roche-sur-yon/mathieu-gerard?pid=establishment-6732" target="_blank"><strong>GERARD</strong></a> 
+      et 
+      <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank"><strong>GUILLEMIN</strong></a>.
+    </p>
+  </section>
+  <section class="banner-photo">
+    <img 
+      src="ressources/images/carrousel1.webp" 
+      alt="Bannière illustrative"
+    />
+  </section>
+  <section class="section-content">
+    <h2>Nos Médecins</h2>
+    <p>
+      Découvrez nos spécialistes en chirurgie maxillo-faciale, stomatologie 
+      et chirurgie orale. Chacun met à votre service son expertise et son 
+      savoir-faire pour vous garantir la meilleure prise en charge possible.
+    </p>
+    <div class="cards">
+      <div class="card">
+        <img src="ressources/images/file.jpg" alt="Dr Gerard"/>
+        <h3>Docteur Gerard</h3>
+        <ul>
+          <li><strong>Chirurgien maxillo-facial et stomatologue</strong></li>
+          <li>Cancérologie, orthognathie, chirurgie reconstructrice...</li>
         </ul>
-    </section>
-    <footer class="footer text-white py-4">
-        <div class="container text-center">
-            <p>&copy; 2023 Cabinet Médical Sour'Yon. Tous droits réservés.</p>
-            <p><a href="#" class="text-white me-2">Mentions Légales</a> | <a href="#" class="text-white">Politique de Confidentialité</a></p>
-        </div>
-    </footer>
+        <a href="DrGerard.html">En savoir plus</a>
+      </div>
+      <div class="card">
+        <img src="ressources/images/DrLlabres.jpg" alt="Dr Llabres"/>
+        <h3>Docteur LLABRES</h3>
+        <ul>
+          <li><strong>Stomatologue</strong></li>
+          <li>Chirurgie buccale, traitement de l’apnée du sommeil...</li>
+        </ul>
+        <a href="DrLlabres.html">En savoir plus</a>
+      </div>
+      <div class="card">
+        <img src="ressources/images/DrGuillemin.jpg" alt="Dr Guillemin"/>
+        <h3>Docteur GUILLEMIN</h3>
+        <ul>
+          <li><strong>Chirurgien oral</strong></li>
+          <li>Chirurgie buccale, implantologie...</li>
+        </ul>
+        <a href="DrGuillemin.html">En savoir plus</a>
+      </div>
+    </div>
+  </section>
+  <section class="important-banner">
+    <h4>
+      <i class="bi bi-exclamation-triangle-fill"></i> 
+      Important
+    </h4>
+    <p>
+      Toute intervention chirurgicale devra obligatoirement être précédée 
+      d'une consultation sur rendez-vous pour laquelle vous devrez impérativement 
+      vous munir :
+    </p>
+    <ul>
+      <li>Du <strong>courrier de votre médecin</strong> ou dentiste indiquant le motif de consultation</li>
+      <li>De vos <strong>radiographies</strong>, notamment panoramique dentaire</li>
+      <li>De l'<strong>ordonnance de vos traitements habituels</strong> si vous en prenez</li>
+      <li>De l'<strong>attestation adéquate</strong> (CMU, CSS, ACS, AME)</li>
+      <li style="margin-top: 10px;">
+        En cas de <strong>contretemps</strong>, merci de prévenir le cabinet 
+        <strong>48 heures</strong> à l’avance : toute absence injustifiée peut 
+        empêcher toute nouvelle prise de rendez-vous.
+      </li>
+    </ul>
+  </section>
+  <footer>
+    <p>
+      <a href="#">Mentions Légales</a> | 
+      <a href="#">Politique de Confidentialité</a>
+    </p>
+    <p>&copy; 2025 Cabinet Médical Sour'Yon. Tous droits réservés.</p>
+  </footer>
+  <script>
+    const btnEmergency = document.getElementById('btn-emergency');
+    const offcanvas = document.getElementById('offcanvas');
+    const offcanvasOverlay = document.getElementById('offcanvas-overlay');
+    const offcanvasClose = document.getElementById('offcanvas-close');
+    btnEmergency.addEventListener('click', () => {
+      offcanvas.classList.add('open');
+      offcanvasOverlay.classList.add('show');
+    });
+    offcanvasClose.addEventListener('click', () => {
+      offcanvas.classList.remove('open');
+      offcanvasOverlay.classList.remove('show');
+    });
+    offcanvasOverlay.addEventListener('click', () => {
+      offcanvas.classList.remove('open');
+      offcanvasOverlay.classList.remove('show');
+    });
+  </script>
 </body>
 </html>
