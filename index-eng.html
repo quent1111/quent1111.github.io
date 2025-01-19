@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cabinet Sour'Yon</title>
+  <style>
+    /*
+      ===============================
+         VARIABLES & RESET
+      ===============================
+    */
+    :root {
+      /* -- Main colors -- */
+      --bg-main: #ffffff;         /* Global background */
+      --bg-secondary: #f7f9fc;    /* Section background, slightly gray/blue */
+      --bg-card: #ffffff;         /* Card background */
+      --text-main: #333333;       /* Main text color */
+      --text-secondary: #666666;  /* Secondary text color */
+      --accent-blue: #1176c0;     /* Corporate blue */
+      --accent-red: #ff0000;      /* Bright red for the emergency button */
+      --font-main: 'Montserrat', sans-serif;
+
+      /* -- Speeds & shadows -- */
+      --transition-speed: 0.3s;
+      --box-shadow-default: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--accent-blue);
+      transition: color var(--transition-speed);
+    }
+    a:hover {
+      color: #0e5a8a; /* Slightly darker */
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-weight: normal;
+      color: var(--text-main);
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 10px 0;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 8px;
+      padding-left: 25px;
+      position: relative;
+    }
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-blue);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /*
+      ===============================
+         HEADER (STICKY)
+      ===============================
+    */
+    header {
+      background-color: #fdfdfd;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      box-shadow: var(--box-shadow-default);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-cabinet {
+      width: 180px;
+      display: block;
+    }
+
+    .lang-switch {
+      width: 40px;
+      height: auto;
+    }
+
+    .actions-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /*
+      ===============================
+         EMERGENCY BUTTON + PULSE
+      ===============================
+    */
+    .emergency-button {
+      background-color: var(--accent-red);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: background var(--transition-speed);
+      border: none;
+      cursor: pointer;
+      animation: pulse 1.8s infinite;
+    }
+    .emergency-button:hover {
+      background-color: #cc0000;
+    }
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,0,0, 0.4);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 20px rgba(255,0,0, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255,0,0, 0);
+      }
+    }
+
+    /*
+      ===============================
+         OFF-CANVAS (EMERGENCY)
+      ===============================
+    */
+    .offcanvas-overlay {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none; /* hidden by default */
+      z-index: 1000;
+    }
+    .offcanvas-overlay.show {
+      display: block;
+    }
+
+    .offcanvas {
+      position: fixed;
+      top: 0;
+      left: -300px; /* out of screen by default */
+      width: 300px;
+      height: 100%;
+      background: #fff;
+      padding: 20px;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+      transition: left var(--transition-speed) ease;
+      z-index: 1001;
+      overflow-y: auto;
+    }
+    .offcanvas.open {
+      left: 0; /* reveal */
+    }
+
+    .offcanvas h3 {
+      margin-bottom: 10px;
+      color: var(--accent-blue);
+    }
+    .offcanvas p {
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+    }
+    .offcanvas-close {
+      display: inline-block;
+      background: none;
+      border: none;
+      color: var(--accent-blue);
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: color var(--transition-speed);
+    }
+    .offcanvas-close:hover {
+      color: #0e5a8a;
+    }
+
+    /*
+      ===============================
+         TOP SECTION with BLOBS
+      ===============================
+    */
+    .top-section {
+      position: relative;
+      min-height: 400px;
+      padding: 60px 20px;
+      background-color: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: var(--box-shadow-default);
+    }
+    .top-section h1 {
+      font-size: 2.4rem;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      z-index: 2;
+      position: relative;
+    }
+    .top-section p {
+      max-width: 600px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0 auto;
+      z-index: 2;
+      position: relative;
+    }
+    /* BLOB 1 */
+    .top-section::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 1;
+    }
+    /* BLOB 2 */
+    .top-section::after {
+      content: "";
+      position: absolute;
+      bottom: -120px;
+      right: -120px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.15;
+      z-index: 1;
+    }
+
+    /*
+      ===============================
+         TEAM SECTION
+      ===============================
+    */
+    .section-content {
+      background-color: var(--bg-secondary);
+      padding: 50px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+    }
+    .section-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: var(--accent-blue);
+      position: relative;
+      text-transform: uppercase;
+    }
+    .section-content h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-blue);
+      margin-top: 10px;
+      border-radius: 4px;
+    }
+    .section-content p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .flex-equipe {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
+    .flex-equipe .col-text {
+      flex: 1 1 400px;
+    }
+    .flex-equipe .col-img {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+    .teamimg {
+      max-width: 400px;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /*
+      ===============================
+         MAP & SECRETARIAT SECTION
+      ===============================
+    */
+    .map-section {
+      background-color: var(--bg-secondary);
+      padding: 50px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      text-align: center;
+    }
+    .map-section iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      margin-bottom: 20px;
+    }
+    .map-section p {
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    .map-section h2 {
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /*
+      ===============================
+         PHOTO BANNER (SIMPLE)
+      ===============================
+    */
+    .banner-photo {
+      margin: 40px 0;
+      text-align: center;
+    }
+    .banner-photo img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      object-position: 50% 100%;
+      box-shadow: var(--box-shadow-default);
+    }
+
+    /*
+      ===============================
+         DOCTORS' CARDS
+      ===============================
+    */
+    .cards {
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 20px;
+    }
+    .card {
+      background-color: var(--bg-card);
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: var(--box-shadow-default);
+      transition: transform var(--transition-speed) ease, 
+                  box-shadow var(--transition-speed) ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .card img {
+      border-radius: 6px;
+      margin-bottom: 15px;
+      max-height: 300px;
+      object-fit: cover;
+      object-position: 50% 0%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      margin-bottom: 10px;
+      color: var(--accent-blue);
+      font-size: 1.3rem;
+    }
+    .card ul {
+      margin: 10px 0 20px 0;
+      color: var(--text-secondary);
+    }
+    .card a {
+      background-color: var(--accent-blue);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: fit-content;
+      transition: background-color var(--transition-speed);
+    }
+    .card a:hover {
+      background-color: #0e5a8a;
+    }
+
+    /*
+      ===============================
+         IMPORTANT SECTION
+         (yellow background #f9c74f)
+      ===============================
+    */
+    .important-banner {
+      background-color: #f9c74f;
+      margin: 20px auto;
+      max-width: 1200px;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+    }
+    .important-banner h4 {
+      color: var(--accent-red);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+    }
+    .important-banner p {
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+    .important-banner li {
+      color: var(--text-main);
+    }
+    .important-banner li::before {
+      color: var(--accent-red);
+    }
+
+    /*
+      ===============================
+         FOOTER
+      ===============================
+    */
+    footer {
+      background-color: #fdfdfd;
+      padding: 20px;
+      text-align: center;
+      color: var(--text-secondary);
+      box-shadow: var(--box-shadow-default);
+      margin-top: 40px;
+    }
+    footer a {
+      color: var(--accent-blue);
+      margin: 0 10px;
+      font-size: 0.9rem;
+      transition: color var(--transition-speed);
+    }
+    footer a:hover {
+      color: #0e5a8a;
+    }
+    footer p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /*
+      ===============================
+         MEDIA QUERIES
+      ===============================
+    */
+    @media (max-width: 768px) {
+      .top-section {
+        min-height: 300px;
+        padding: 40px 15px;
+      }
+      .top-section h1 {
+        font-size: 2rem;
+      }
+      .top-section p {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-container">
+      <!-- LOGO (Required) -->
+      <img src="ressources/images/logo.png" alt="Sour'Yon Logo" class="logo-cabinet" />
+    </div>
+
+    <div class="actions-right">
+      <!-- LANG SWITCH (Required) -->
+      <a href="index.html">
+        <img src="ressources/images/english_flag.png" alt="FR" class="lang-switch" />
+      </a>
+
+      <!-- EMERGENCY BUTTON (Required) -->
+      <button class="emergency-button" id="btn-emergency">
+        Emergency Instructions
+      </button>
+    </div>
+  </header>
+
+  <!-- OFFCANVAS EMERGENCY -->
+  <div class="offcanvas-overlay" id="offcanvas-overlay"></div>
+  <div class="offcanvas" id="offcanvas">
+    <button class="offcanvas-close" id="offcanvas-close">Close X</button>
+    <h3>Emergency Instructions</h3>
+    <p>
+      This is a dedicated space to list all the emergency guidelines or 
+      numbers to call in case of a problem, etc.
+    </p>
+  </div>
+
+  <!-- TOP SECTION (BLOBS) -->
+  <section class="top-section">
+    <h1>Welcome to Sour'Yon Medical Office</h1>
+    <p>
+      Specialized in treating oral and facial pathologies, our team welcomes you 
+      for consultations and procedures at Clinique Saint Charles, in La Roche sur Yon.
+    </p>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="section-content">
+    <h2>Our Team</h2>
+    <div class="flex-equipe">
+      <div class="col-text">
+        <p>
+          <strong>The entire Sour'Yon team</strong> welcomes you for the treatment 
+          of oral and facial pathologies at 
+          <strong>Clinique Saint Charles</strong>, 
+          <strong>11 boulevard René Levesque, 85000 La Roche sur Yon</strong>.
+        </p>
+        <p>
+          <strong>Our nurses and surgical assistants</strong> will support you 
+          in the operating room and ensure your follow-up for all surgical procedures 
+          performed under local or general anesthesia.
+        </p>
+      </div>
+      <div class="col-img">
+        <!-- TEAM IMAGE (Required) -->
+        <img 
+          src="ressources/images/whole-team.png" 
+          alt="Sour'Yon Team" 
+          class="teamimg"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP & SECRETARIAT SECTION -->
+  <section class="map-section">
+    <h2>Secretariat & Location</h2>
+    <!-- GOOGLE MAP (Required) -->
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2738.4274240885766!2d-1.4168598231074867!3d46.65782187111852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48042ffa94e4789d%3A0x85b8f574f24b21cd!2sClinique%20Saint%20Charles!5e0!3m2!1sfr!2sfr!4v1729124701311!5m2!1sfr!2sfr"
+      loading="lazy">
+    </iframe>
+    <p>
+      <strong>Our secretaries Sophie, Sylvia, and Dominique</strong> are available 
+      from Monday to Friday, <strong>8:00 AM to 12:00 PM</strong> and <strong>2:00 PM to 6:00 PM</strong>.<br>
+      Our secretariat can be reached at <strong>02 51 44 44 95</strong> for appointments, 
+      or via 
+      <a href="https://www.doctolib.fr/cabinet-medical/la-roche-sur-yon/stomatologistes-clinique-saint-charles" target="_blank">
+        <strong>Doctolib</strong>
+      </a> for Doctors 
+      <a href="https://www.doctolib.fr/stomatologue/la-roche-sur-yon/gerard-llabres" target="_blank"><strong>LLABRES</strong></a>, 
+      <a href="https://www.doctolib.fr/chirurgien-maxillo-facial-et-stomatologiste/la-roche-sur-yon/mathieu-gerard?pid=establishment-6732" target="_blank"><strong>GERARD</strong></a>, 
+      and 
+      <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank"><strong>GUILLEMIN</strong></a>.
+    </p>
+  </section>
+
+  <!-- SIMPLE PHOTO BANNER -->
+  <section class="banner-photo">
+    <img 
+      src="ressources/images/carrousel1.webp" 
+      alt="Illustrative Banner"
+    />
+  </section>
+
+  <!-- DOCTORS' CARDS SECTION -->
+  <section class="section-content">
+    <h2>Our Doctors</h2>
+    <p>
+      Discover our specialists in maxillofacial surgery, stomatology, 
+      and oral surgery. Each provides their expertise and skills to 
+      guarantee you the best possible care.
+    </p>
+    <div class="cards">
+      <!-- CARD 1 -->
+      <div class="card">
+        <img src="ressources/images/file.jpg" alt="Dr Gerard"/>
+        <h3>Doctor Gerard</h3>
+        <ul>
+          <li><strong>Maxillofacial surgeon and stomatologist</strong></li>
+          <li>Oncology, orthognathic, reconstructive surgery...</li>
+        </ul>
+        <a href="DrGerard.html">Learn More</a>
+      </div>
+      <!-- CARD 2 -->
+      <div class="card">
+        <img src="ressources/images/DrLlabres.jpg" alt="Dr Llabres"/>
+        <h3>Doctor LLABRES</h3>
+        <ul>
+          <li><strong>Stomatologist</strong></li>
+          <li>Oral surgery, sleep apnea treatment...</li>
+        </ul>
+        <a href="DrLlabres.html">Learn More</a>
+      </div>
+      <!-- CARD 3 -->
+      <div class="card">
+        <img src="ressources/images/DrGuillemin.jpg" alt="Dr Guillemin"/>
+        <h3>Doctor GUILLEMIN</h3>
+        <ul>
+          <li><strong>Oral surgeon</strong></li>
+          <li>Oral surgery, implantology...</li>
+        </ul>
+        <a href="DrGuillemin.html">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPORTANT SECTION (yellow #f9c74f) -->
+  <section class="important-banner">
+    <h4>
+      <i class="bi bi-exclamation-triangle-fill"></i> 
+      Important
+    </h4>
+    <p>
+      Any surgical procedure must necessarily be preceded by a scheduled appointment, 
+      for which you must bring:
+    </p>
+    <ul>
+      <li>A <strong>referral letter from your doctor</strong> or dentist indicating the reason for consultation</li>
+      <li>Your <strong>radiographs</strong>, especially panoramic X-rays</li>
+      <li>Your <strong>prescription for any current daily medication</strong> if applicable</li>
+      <li>Your <strong>valid certificate</strong> if you are a beneficiary of CMU, CSS, ACS, or AME</li>
+      <li style="margin-top: 10px;">
+        In the event of <strong>unforeseen circumstances</strong>, please inform the medical office 
+        at least <strong>48 hours</strong> in advance. Any unjustified absence may prevent any further 
+        appointment scheduling.
+      </li>
+    </ul>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <a href="#">Legal Notice</a> | 
+      <a href="#">Privacy Policy</a>
+    </p>
+    <p>&copy; 2025 Cabinet Médical Sour'Yon. All rights reserved.</p>
+  </footer>
+
+  <!-- Minimalist Offcanvas JS -->
+  <script>
+    const btnEmergency = document.getElementById('btn-emergency');
+    const offcanvas = document.getElementById('offcanvas');
+    const offcanvasOverlay = document.getElementById('offcanvas-overlay');
+    const offcanvasClose = document.getElementById('offcanvas-close');
+
+    // Open the offcanvas
+    btnEmergency.addEventListener('click', () => {
+      offcanvas.classList.add('open');
+      offcanvasOverlay.classList.add('show');
+    });
+
+    // Close the offcanvas
+    offcanvasClose.addEventListener('click', () => {
+      offcanvas.classList.remove('open');
+      offcanvasOverlay.classList.remove('show');
+    });
+
+    // Close if clicking outside
+    offcanvasOverlay.addEventListener('click', () => {
+      offcanvas.classList.remove('open');
+      offcanvasOverlay.classList.remove('show');
+    });
+  </script>
+</body>
+</html>

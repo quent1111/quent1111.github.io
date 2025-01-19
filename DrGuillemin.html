@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dr Maxime GUILLEMIN</title>
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet"
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+  <link 
+    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-secondary: #f7f9fc;
+      --bg-card: #ffffff;
+      --text-main: #333333;
+      --text-secondary: #666666;
+      --accent-blue: #1176c0;
+      --accent-red: #ff0000;
+      --font-main: 'Montserrat', sans-serif;
+      --transition-speed: 0.3s;
+      --box-shadow-default: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: var(--accent-blue);
+      transition: color var(--transition-speed);
+    }
+    a:hover {
+      color: #0e5a8a;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: normal;
+      margin-bottom: 15px;
+      color: var(--text-main);
+    }
+    p {
+      color: var(--text-secondary);
+    }
+    ul {
+      margin: 10px 0;
+      padding: 0;
+      list-style: none;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    nav.navbar {
+      background-color: #fdfdfd;
+      padding: 1rem 0;
+      box-shadow: var(--box-shadow-default);
+    }
+    .navbar-brand img {
+      max-height: 80px;
+      width: auto;
+      height: auto;
+    }
+    .navbar-nav .nav-link {
+      color: var(--text-main);
+      font-size: 1rem;
+      margin-right: 1rem;
+      transition: color var(--transition-speed);
+    }
+    .navbar-nav .nav-link:hover {
+      color: var(--accent-blue);
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .doctor-intro-section {
+      position: relative;
+      padding: 60px 20px;
+      background-color: var(--bg-secondary);
+      overflow: hidden;
+    }
+    .doctor-intro-section::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 1;
+    }
+    .doctor-intro-section::after {
+      content: "";
+      position: absolute;
+      bottom: -120px;
+      right: -120px;
+      width: 350px;
+      height: 350px;
+      background-color: var(--accent-blue);
+      border-radius: 50%;
+      opacity: 0.15;
+      z-index: 1;
+    }
+    .doctor-intro-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+    }
+    .doctor-photo-container {
+      flex: 1 1 400px;
+      text-align: center;
+    }
+    .doctor-photo {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      object-position: 50% 10%;
+      border-radius: 50%;
+      border: 5px solid var(--accent-blue);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .doctor-info {
+      flex: 1 1 400px;
+    }
+    .doctor-intro-section h2 {
+      font-size: 2rem;
+      color: var(--accent-blue);
+      margin-bottom: 15px;
+    }
+    .expertise-section {
+      background-color: var(--bg-secondary);
+      padding: 50px 20px;
+      margin: 0 auto;
+      max-width: 1200px;
+      box-shadow: var(--box-shadow-default);
+      border-radius: 8px;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    .expertise-section h2 {
+      text-align: center;
+      color: var(--accent-blue);
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+    .expertise-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 30px;
+    }
+    .expertise-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      padding: 30px 20px;
+      text-align: center;
+      transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    .expertise-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .expertise-card .icon-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      margin: 0 auto 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .expertise-card h5 {
+      color: var(--accent-blue);
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+    }
+    .expertise-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .chirurgie-orale-section {
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+      animation: fadeIn 0.8s ease forwards;
+    }
+    .chirurgie-orale-section h2 {
+      text-align: center;
+      color: var(--accent-blue);
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+    .chirurgie-orale-section .content {
+      line-height: 1.7;
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+    .chirurgie-orale-section h3 {
+      font-size: 1.2rem;
+      margin-top: 30px;
+      color: var(--accent-blue);
+      font-weight: bold;
+      position: relative;
+      padding-bottom: 8px;
+    }
+    .chirurgie-orale-section h3::after {
+      content: "";
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: var(--accent-blue);
+      margin-top: 5px;
+      border-radius: 4px;
+    }
+    .chirurgie-orale-section p strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+    .chirurgie-orale-section ul {
+      margin-top: 10px;
+      padding-left: 2em;
+    }
+    .chirurgie-orale-section li {
+      list-style: disc;
+      margin-bottom: 6px;
+    }
+    .contact-section {
+      position: relative;
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 60px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: var(--box-shadow-default);
+      animation: fadeIn 0.8s ease forwards;
+      overflow: hidden;
+    }
+    .contact-section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 60%;
+      background: linear-gradient(
+        135deg,
+        rgba(17,118,192,0.07),
+        rgba(255,255,255,0)
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    .contact-section h2 {
+      text-align: center;
+      color: var(--accent-blue);
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .contact-section > .row {
+      position: relative;
+      z-index: 2;
+    }
+    .contact-item {
+      background-color: #f9f9f9;
+      border-radius: 6px;
+      padding: 20px 15px;
+      box-shadow: var(--box-shadow-default);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .contact-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+    .icon-background {
+      background-color: var(--accent-blue);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .contact-item h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      font-weight: bold;
+    }
+    .contact-item p,
+    .contact-item a {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 2px 0 0 0;
+    }
+    .contact-item a:hover {
+      color: var(--accent-blue);
+    }
+    footer {
+      background-color: var(--accent-blue);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+    }
+    footer p {
+      margin: 0;
+      color: #fff;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    footer a:hover {
+      color: #0e5a8a;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img 
+          src="ressources/images/logo.png" 
+          alt="Logo du Cabinet Médical Sour'Yon" 
+          class="d-inline-block align-text-top"
+        />
+      </a>
+      <button 
+        class="navbar-toggler" 
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#presentation">Présentation</a></li>
+          <li class="nav-item"><a class="nav-link" href="#expertise">Expertise</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <section id="presentation" class="doctor-intro-section">
+    <div class="doctor-intro-wrapper">
+      <div class="doctor-photo-container">
+        <img 
+          src="ressources/images/DrGuillemin.jpg" 
+          alt="Photo du Dr Guillemin"
+          class="doctor-photo"
+        />
+      </div>
+      <div class="doctor-info">
+        <h2>À propos du Dr. Guillemin</h2>
+        <p>
+          Titulaire d’un doctorat en médecine, le Dr Guillemin s’est spécialisé 
+          en implantologie par le biais d’un diplôme d’état en implantologie orale 
+          à Nantes. Ancien Chef de clinique des universités au CHU de Nantes, 
+          le Dr Guillemin est conventionné secteur 2.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="expertise" class="expertise-section">
+    <h2>Domaines d'Expertise</h2>
+    <div class="expertise-cards">
+      <div class="expertise-card">
+        <div class="icon-circle">
+          <i class="ri-syringe-line"></i>
+        </div>
+        <h5>Chirurgie Orale</h5>
+        <p>
+          Traitement des pathologies dentaires, extractions complexes et interventions 
+          visant à préserver la santé buccale.
+        </p>
+      </div>
+      <div class="expertise-card">
+        <div class="icon-circle">
+          <i class="ri-hospital-line"></i>
+        </div>
+        <h5>Implantologie</h5>
+        <p>
+          Pose d'implants dentaires, régénération osseuse et restauration esthétique du sourire.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="chirurgie-orale-section" id="chirurgie-orale">
+    <div class="container">
+      <h2>La Chirurgie Orale</h2>
+      <div class="content">
+        <h3>Qu’est-ce que la chirurgie orale&nbsp;?</h3>
+        <p>
+          La <strong>chirurgie orale</strong> ou odonto-stomatologie 
+          est la spécialité médico-chirurgicale des pathologies 
+          des <strong>mâchoires</strong> et <strong>tissus environnants</strong>.
+        </p>
+        <h3>Que fait le chirurgien oral&nbsp;?</h3>
+        <p>
+          Après examen et radiographie, le chirurgien oral procède à toute 
+          intervention chirurgicale complexe qui touche&nbsp;:
+        </p>
+        <ul>
+          <li>les dents (<strong>extraction</strong> et remplacement par un implant)</li>
+          <li>les dents de sagesse</li>
+          <li>les alvéoles dentaires</li>
+          <li>l’os des maxillaires</li>
+          <li>les gencives</li>
+          <li>les muqueuses buccales</li>
+          <li>les canaux de communication <em>bouche-sinus</em> et <em>bouche-nez</em></li>
+        </ul>
+        <h3>Quand consulter un chirurgien oral ou stomatologue&nbsp;?</h3>
+        <p>
+          La consultation chez un chirurgien oral se fait généralement 
+          sur orientation d’un <strong>chirurgien-dentiste</strong>, 
+          d’un <strong>orthodontiste</strong> ou d’un <strong>médecin</strong>, 
+          qu’il soit généraliste ou spécialiste.
+        </p>
+        <p>
+          Il s’agit dans la plupart des cas d’une consultation avant 
+          <strong>extraction des dents de sagesse</strong> ou pour la 
+          <strong>pose d’un implant dentaire</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="contact-section" id="contact">
+    <h2>Contact</h2>
+    <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; gap: 30px;">
+      <div class="col-md-6" style="flex: 1 1 400px;">
+        <div class="contact-item">
+          <div class="icon-background">
+            <i class="ri-map-pin-2-fill"></i>
+          </div>
+          <div>
+            <h5>Adresse</h5>
+            <p>11 Boulevard René Lévesque, 85000 La Roche-sur-Yon</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon-background">
+            <i class="bi-telephone-fill"></i>
+          </div>
+          <div>
+            <h5>Téléphone</h5>
+            <p>
+              <a href="tel:0251444495">02 51 44 44 44</a>
+            </p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon-background">
+            <i class="bi-envelope-fill"></i>
+          </div>
+          <div>
+            <h5>E-mail</h5>
+            <p>
+              <a href="mailto:contact@cabinet-medical.com">contact@cabinet-medical.com</a>
+            </p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="icon-background">
+            <i class="ri-calendar-check-fill"></i>
+          </div>
+          <div>
+            <h5>Prendre Rendez-vous</h5>
+            <p>
+              <a 
+                href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732"
+                target="_blank"
+              >
+                Sur Doctolib
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2023 Cabinet Médical Sour'Yon. Tous droits réservés.</p>
+    <p>
+      <a href="#" class="text-white me-2">Mentions Légales</a> | 
+      <a href="#" class="text-white">Politique de Confidentialité</a>
+    </p>
+  </footer>
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+</body>
+</html>
