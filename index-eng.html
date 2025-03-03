@@ -5,23 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cabinet Sour'Yon</title>
   <style>
-    /*
-      ===============================
-         VARIABLES & RESET
-      ===============================
-    */
     :root {
-      /* -- Main colors -- */
-      --bg-main: #ffffff;         /* Global background */
-      --bg-secondary: #f7f9fc;    /* Section background, slightly gray/blue */
-      --bg-card: #ffffff;         /* Card background */
-      --text-main: #333333;       /* Main text color */
-      --text-secondary: #666666;  /* Secondary text color */
-      --accent-blue: #1176c0;     /* Corporate blue */
-      --accent-red: #ff0000;      /* Bright red for the emergency button */
+      --bg-main: #ffffff;
+      --bg-secondary: #f7f9fc;
+      --bg-card: #ffffff;
+      --text-main: #333333;
+      --text-secondary: #666666;
+      --accent-blue: #1176c0;
+      --accent-red: #ff0000;
       --font-main: 'Montserrat', sans-serif;
-
-      /* -- Speeds & shadows -- */
       --transition-speed: 0.3s;
       --box-shadow-default: 0 2px 5px rgba(0,0,0,0.15);
     }
@@ -37,7 +29,7 @@
       color: var(--text-main);
       font-family: var(--font-main);
       line-height: 1.6;
-      overflow-x: hidden; /* Prevent horizontal scroll */
+      overflow-x: hidden;
     }
 
     a {
@@ -46,7 +38,7 @@
       transition: color var(--transition-speed);
     }
     a:hover {
-      color: #0e5a8a; /* Slightly darker */
+      color: #0e5a8a;
     }
 
     h1, h2, h3, h4, h5 {
@@ -78,11 +70,6 @@
       display: block;
     }
 
-    /*
-      ===============================
-         HEADER (STICKY)
-      ===============================
-    */
     header {
       background-color: #fdfdfd;
       position: sticky;
@@ -117,11 +104,6 @@
       gap: 20px;
     }
 
-    /*
-      ===============================
-         EMERGENCY BUTTON + PULSE
-      ===============================
-    */
     .emergency-button {
       background-color: var(--accent-red);
       color: #fff;
@@ -151,19 +133,14 @@
       }
     }
 
-    /*
-      ===============================
-         OFF-CANVAS (EMERGENCY)
-      ===============================
-    */
     .offcanvas-overlay {
       position: fixed;
-      top: 0; 
+      top: 0;
       left: 0;
-      width: 100%; 
+      width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.6);
-      display: none; /* hidden by default */
+      display: none;
       z-index: 1000;
     }
     .offcanvas-overlay.show {
@@ -173,7 +150,7 @@
     .offcanvas {
       position: fixed;
       top: 0;
-      left: -300px; /* out of screen by default */
+      left: -300px;
       width: 300px;
       height: 100%;
       background: #fff;
@@ -184,7 +161,7 @@
       overflow-y: auto;
     }
     .offcanvas.open {
-      left: 0; /* reveal */
+      left: 0;
     }
 
     .offcanvas h3 {
@@ -210,11 +187,6 @@
       color: #0e5a8a;
     }
 
-    /*
-      ===============================
-         TOP SECTION with BLOBS
-      ===============================
-    */
     .top-section {
       position: relative;
       min-height: 400px;
@@ -243,7 +215,6 @@
       z-index: 2;
       position: relative;
     }
-    /* BLOB 1 */
     .top-section::before {
       content: "";
       position: absolute;
@@ -256,7 +227,6 @@
       opacity: 0.2;
       z-index: 1;
     }
-    /* BLOB 2 */
     .top-section::after {
       content: "";
       position: absolute;
@@ -270,11 +240,6 @@
       z-index: 1;
     }
 
-    /*
-      ===============================
-         TEAM SECTION
-      ===============================
-    */
     .section-content {
       background-color: var(--bg-secondary);
       padding: 50px 20px;
@@ -325,11 +290,6 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    /*
-      ===============================
-         MAP & SECRETARIAT SECTION
-      ===============================
-    */
     .map-section {
       background-color: var(--bg-secondary);
       padding: 50px 20px;
@@ -358,11 +318,6 @@
       margin-bottom: 20px;
     }
 
-    /*
-      ===============================
-         PHOTO BANNER (SIMPLE)
-      ===============================
-    */
     .banner-photo {
       margin: 40px 0;
       text-align: center;
@@ -375,11 +330,6 @@
       box-shadow: var(--box-shadow-default);
     }
 
-    /*
-      ===============================
-         DOCTORS' CARDS
-      ===============================
-    */
     .cards {
       display: grid;
       gap: 30px;
@@ -432,12 +382,6 @@
       background-color: #0e5a8a;
     }
 
-    /*
-      ===============================
-         IMPORTANT SECTION
-         (yellow background #f9c74f)
-      ===============================
-    */
     .important-banner {
       background-color: #f9c74f;
       margin: 20px auto;
@@ -467,11 +411,6 @@
       color: var(--accent-red);
     }
 
-    /*
-      ===============================
-         FOOTER
-      ===============================
-    */
     footer {
       background-color: #fdfdfd;
       padding: 20px;
@@ -495,11 +434,6 @@
       color: var(--text-secondary);
     }
 
-    /*
-      ===============================
-         MEDIA QUERIES
-      ===============================
-    */
     @media (max-width: 768px) {
       .top-section {
         min-height: 300px;
@@ -515,39 +449,45 @@
   </style>
 </head>
 <body>
-
-  <!-- HEADER -->
   <header>
     <div class="logo-container">
-      <!-- LOGO (Required) -->
       <img src="ressources/images/logo.png" alt="Sour'Yon Logo" class="logo-cabinet" />
     </div>
 
     <div class="actions-right">
-      <!-- LANG SWITCH (Required) -->
       <a href="index.html">
         <img src="ressources/images/english_flag.png" alt="FR" class="lang-switch" />
       </a>
-
-      <!-- EMERGENCY BUTTON (Required) -->
       <button class="emergency-button" id="btn-emergency">
         Emergency Instructions
       </button>
     </div>
   </header>
 
-  <!-- OFFCANVAS EMERGENCY -->
   <div class="offcanvas-overlay" id="offcanvas-overlay"></div>
   <div class="offcanvas" id="offcanvas">
     <button class="offcanvas-close" id="offcanvas-close">Close X</button>
     <h3>Emergency Instructions</h3>
-    <p>
-      This is a dedicated space to list all the emergency guidelines or 
-      numbers to call in case of a problem, etc.
-    </p>
+    <p><strong>In case of emergency:</strong></p>
+    <ul>
+      <li><strong>Heavy bleeding</strong>: Apply pressure to the area with sterile gauze or a clean cloth. Immediately contact our practice or the nearest emergency department.</li>
+      <li><strong>Severe pain or infection</strong>: Take a painkiller recommended by your pharmacist (avoid aspirin, as it promotes bleeding) and call the practice for an emergency appointment.</li>
+      <li><strong>Facial trauma</strong> (fall, blow, accident): Protect the area, apply cold if possible (ice wrapped in a cloth), and go quickly to an emergency department.</li>
+      <li><strong>Torn sutures or dressings</strong>: Disinfect the wound with a mild antiseptic and contact the practice for evaluation.</li>
+    </ul>
+    <p><strong>Useful numbers:</strong></p>
+    <ul>
+      <li>SAMU (vital emergencies): 15</li>
+      <li>Fire Department: 18</li>
+      <li>European Emergency (mobile): 112</li>
+    </ul>
+    <p><strong>During evenings, weekends, and public holidays:</strong></p>
+    <ul>
+      <li>Dial 15 to reach the SAMU call center, which will direct you to the appropriate on-call service.</li>
+      <li>Also check our office voicemail, which may list an on-call number or an emergency dental/facial service.</li>
+    </ul>
   </div>
 
-  <!-- TOP SECTION (BLOBS) -->
   <section class="top-section">
     <h1>Welcome to Sour'Yon Medical Office</h1>
     <p>
@@ -556,7 +496,6 @@
     </p>
   </section>
 
-  <!-- TEAM SECTION -->
   <section class="section-content">
     <h2>Our Team</h2>
     <div class="flex-equipe">
@@ -574,7 +513,6 @@
         </p>
       </div>
       <div class="col-img">
-        <!-- TEAM IMAGE (Required) -->
         <img 
           src="ressources/images/whole-team.png" 
           alt="Sour'Yon Team" 
@@ -584,10 +522,8 @@
     </div>
   </section>
 
-  <!-- MAP & SECRETARIAT SECTION -->
   <section class="map-section">
     <h2>Secretariat & Location</h2>
-    <!-- GOOGLE MAP (Required) -->
     <iframe
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2738.4274240885766!2d-1.4168598231074867!3d46.65782187111852!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48042ffa94e4789d%3A0x85b8f574f24b21cd!2sClinique%20Saint%20Charles!5e0!3m2!1sfr!2sfr!4v1729124701311!5m2!1sfr!2sfr"
       loading="lazy">
@@ -607,7 +543,6 @@
     </p>
   </section>
 
-  <!-- SIMPLE PHOTO BANNER -->
   <section class="banner-photo">
     <img 
       src="ressources/images/carrousel1.webp" 
@@ -615,7 +550,6 @@
     />
   </section>
 
-  <!-- DOCTORS' CARDS SECTION -->
   <section class="section-content">
     <h2>Our Doctors</h2>
     <p>
@@ -624,7 +558,6 @@
       guarantee you the best possible care.
     </p>
     <div class="cards">
-      <!-- CARD 1 -->
       <div class="card">
         <img src="ressources/images/file.jpg" alt="Dr Gerard"/>
         <h3>Doctor Gerard</h3>
@@ -634,7 +567,6 @@
         </ul>
         <a href="DrGerard.html">Learn More</a>
       </div>
-      <!-- CARD 2 -->
       <div class="card">
         <img src="ressources/images/DrLlabres.jpg" alt="Dr Llabres"/>
         <h3>Doctor LLABRES</h3>
@@ -644,7 +576,6 @@
         </ul>
         <a href="DrLlabres.html">Learn More</a>
       </div>
-      <!-- CARD 3 -->
       <div class="card">
         <img src="ressources/images/DrGuillemin.jpg" alt="Dr Guillemin"/>
         <h3>Doctor GUILLEMIN</h3>
@@ -657,7 +588,6 @@
     </div>
   </section>
 
-  <!-- IMPORTANT SECTION (yellow #f9c74f) -->
   <section class="important-banner">
     <h4>
       <i class="bi bi-exclamation-triangle-fill"></i> 
@@ -680,7 +610,6 @@
     </ul>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>
       <a href="#">Legal Notice</a> | 
@@ -689,26 +618,22 @@
     <p>&copy; 2025 Cabinet Médical Sour'Yon. All rights reserved.</p>
   </footer>
 
-  <!-- Minimalist Offcanvas JS -->
   <script>
     const btnEmergency = document.getElementById('btn-emergency');
     const offcanvas = document.getElementById('offcanvas');
     const offcanvasOverlay = document.getElementById('offcanvas-overlay');
     const offcanvasClose = document.getElementById('offcanvas-close');
 
-    // Open the offcanvas
     btnEmergency.addEventListener('click', () => {
       offcanvas.classList.add('open');
       offcanvasOverlay.classList.add('show');
     });
 
-    // Close the offcanvas
     offcanvasClose.addEventListener('click', () => {
       offcanvas.classList.remove('open');
       offcanvasOverlay.classList.remove('show');
     });
 
-    // Close if clicking outside
     offcanvasOverlay.addEventListener('click', () => {
       offcanvas.classList.remove('open');
       offcanvasOverlay.classList.remove('show');
