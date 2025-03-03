@@ -437,15 +437,31 @@
       </button>
     </div>
   </header>
+
   <div class="offcanvas-overlay" id="offcanvas-overlay"></div>
   <div class="offcanvas" id="offcanvas">
     <button class="offcanvas-close" id="offcanvas-close">Fermer X</button>
     <h3>Consignes d'urgence</h3>
-    <p>
-      Voici un espace dédié pour lister toutes les consignes d’urgence ou 
-      les numéros à appeler en cas de problème, etc.
-    </p>
+    <p><strong>En cas d’urgence</strong> :</p>
+    <ul>
+      <li><strong>Saignement important</strong> : compressez la zone avec des compresses stériles ou, à défaut, un linge propre. Contactez immédiatement le cabinet ou le service d’urgences le plus proche.</li>
+      <li><strong>Douleur aiguë ou infection</strong> : prenez un antalgique conseillé par votre pharmacien (évitez l’aspirine qui favorise le saignement) et appelez le cabinet pour un rendez-vous en urgence.</li>
+      <li><strong>Traumatisme facial</strong> (chute, coup, accident) : protégez la zone, appliquez si possible du froid (glace entourée d’un linge) et rendez-vous rapidement aux urgences.</li>
+      <li><strong>Sutures ou pansements arrachés</strong> : désinfectez la plaie avec un antiseptique doux et contactez le cabinet pour une évaluation.</li>
+    </ul>
+    <p><strong>Numéros utiles</strong> :</p>
+    <ul>
+      <li>SAMU (urgences vitales) : 15</li>
+      <li>Pompiers : 18</li>
+      <li>Urgences Europe (téléphone portable) : 112</li>
+    </ul>
+    <p><strong>En soirée, week-end et jours fériés</strong> :</p>
+    <ul>
+      <li>Composez le 15 pour joindre le régulateur SAMU, qui vous orientera vers le service de garde adapté.</li>
+      <li>Consultez également la messagerie du cabinet, qui peut indiquer un numéro d’astreinte ou un service d’urgences dentaires/faciales.</li>
+    </ul>
   </div>
+
   <section class="top-section">
     <h1>Bienvenue au Cabinet Sour'Yon</h1>
     <p>
@@ -454,6 +470,7 @@
       interventions au sein de la Clinique Saint Charles, à La Roche sur Yon.
     </p>
   </section>
+
   <section class="section-content">
     <h2>Notre Équipe</h2>
     <div class="flex-equipe">
@@ -479,6 +496,7 @@
       </div>
     </div>
   </section>
+
   <section class="map-section">
     <h2>Secrétariat & Localisation</h2>
     <iframe
@@ -500,12 +518,14 @@
       <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank"><strong>GUILLEMIN</strong></a>.
     </p>
   </section>
+
   <section class="banner-photo">
     <img 
       src="ressources/images/carrousel1.webp" 
       alt="Bannière illustrative"
     />
   </section>
+
   <section class="section-content">
     <h2>Nos Médecins</h2>
     <p>
@@ -543,6 +563,7 @@
       </div>
     </div>
   </section>
+
   <section class="important-banner">
     <h4>
       <i class="bi bi-exclamation-triangle-fill"></i> 
@@ -565,6 +586,7 @@
       </li>
     </ul>
   </section>
+
   <footer>
     <p>
       <a href="#">Mentions Légales</a> | 
@@ -572,19 +594,23 @@
     </p>
     <p>&copy; 2025 Cabinet Médical Sour'Yon. Tous droits réservés.</p>
   </footer>
+
   <script>
     const btnEmergency = document.getElementById('btn-emergency');
     const offcanvas = document.getElementById('offcanvas');
     const offcanvasOverlay = document.getElementById('offcanvas-overlay');
     const offcanvasClose = document.getElementById('offcanvas-close');
+
     btnEmergency.addEventListener('click', () => {
       offcanvas.classList.add('open');
       offcanvasOverlay.classList.add('show');
     });
+
     offcanvasClose.addEventListener('click', () => {
       offcanvas.classList.remove('open');
       offcanvasOverlay.classList.remove('show');
     });
+
     offcanvasOverlay.addEventListener('click', () => {
       offcanvas.classList.remove('open');
       offcanvasOverlay.classList.remove('show');
