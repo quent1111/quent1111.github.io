@@ -11,12 +11,16 @@ import DrGuilleminPage from './pages/DrGuilleminPage'
 
 export default function App() {
   const location = useLocation()
+  const isHome = location.pathname === '/'
+  const hasDarkHero = isHome || location.pathname.startsWith('/dr-')
 
   return (
     <LanguageProvider>
       <div className="min-h-screen flex flex-col bg-white">
         <ScrollToTop />
         <Header />
+        {/* Spacer for fixed header on pages without dark hero */}
+        {!hasDarkHero && <div className="h-20" />}
         <main className="flex-1">
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>

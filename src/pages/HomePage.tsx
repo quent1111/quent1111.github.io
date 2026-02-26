@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import {
   MapPin,
   Phone,
@@ -12,6 +13,7 @@ import {
   Clock,
   Users,
   Stethoscope,
+  ChevronDown,
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import PageTransition from '../components/PageTransition'
@@ -22,48 +24,101 @@ export default function HomePage() {
 
   return (
     <PageTransition>
-      {/* Hero */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-blue-50">
+      {/* Hero — full-viewport with clinic photo */}
+      <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+        {/* Background image */}
         <div className="absolute inset-0">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl" />
+          <img
+            src="/ressources/images/carrousel1.webp"
+            alt="Clinique Saint Charles"
+            className="w-full h-full object-cover object-bottom"
+          />
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/70 via-gray-900/50 to-gray-900/80" />
+          {/* Accent gradient at bottom */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-primary-800/40 to-transparent" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-          <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+
+        {/* Floating glass card with content */}
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="text-center"
+          >
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white/90 px-5 py-2 rounded-full text-sm font-medium mb-8 border border-white/20"
+            >
               <Stethoscope className="w-4 h-4" />
               {t('Clinique Saint Charles, La Roche sur Yon', 'Clinique Saint Charles, La Roche sur Yon')}
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight mb-6">
-              {t('Bienvenue au ', 'Welcome to ')}
-              <span className="text-primary">Cabinet Sour'Yon</span>
+            </motion.div>
+
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 drop-shadow-lg">
+              {t('Bienvenue au', 'Welcome to')}
+              <br />
+              <span className="bg-gradient-to-r from-blue-300 via-sky-200 to-cyan-300 bg-clip-text text-transparent">
+                Cabinet Sour'Yon
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-500 leading-relaxed max-w-2xl mx-auto mb-10">
+
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-white/75 leading-relaxed max-w-2xl mx-auto mb-12 font-light">
               {t(
                 'Spécialisé dans la prise en charge des pathologies de la bouche et du visage, notre équipe vous accueille pour des consultations et interventions au sein de la Clinique Saint Charles, à La Roche sur Yon.',
                 'Specialized in treating oral and facial pathologies, our team welcomes you for consultations and procedures at Clinique Saint Charles, in La Roche sur Yon.'
               )}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
               <a
                 href="https://www.doctolib.fr/cabinet-medical/la-roche-sur-yon/stomatologistes-clinique-saint-charles"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-3.5 rounded-full font-semibold transition-all duration-200 shadow-lg shadow-primary/25 hover:shadow-primary/40"
+                className="group inline-flex items-center gap-2.5 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold transition-all duration-300 shadow-2xl shadow-black/20 hover:shadow-white/20 hover:scale-105"
               >
-                <Calendar className="w-5 h-5" />
+                <Calendar className="w-5 h-5 text-primary" />
                 {t('Prendre rendez-vous', 'Book an appointment')}
+                <ArrowRight className="w-4 h-4 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
               </a>
               <a
                 href="tel:0251444495"
-                className="inline-flex items-center gap-2 border-2 border-gray-200 hover:border-primary/30 text-gray-700 px-8 py-3.5 rounded-full font-semibold transition-all duration-200 hover:bg-primary-50"
+                className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 border border-white/20 hover:border-white/40"
               >
                 <Phone className="w-5 h-5" />
                 02 51 44 44 95
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+            className="flex flex-col items-center gap-2 text-white/50"
+          >
+            <span className="text-xs font-medium tracking-widest uppercase">{t('Découvrir', 'Discover')}</span>
+            <ChevronDown className="w-5 h-5" />
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* Team Section */}
@@ -168,19 +223,6 @@ export default function HomePage() {
                 <a href="https://www.doctolib.fr/chirurgien-oral/la-roche-sur-yon/maxime-guillemin-la-roche-sur-yon?pid=establishment-6732" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline">GUILLEMIN</a>.
               </div>
             </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Banner Photo */}
-      <Section className="py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl overflow-hidden shadow-lg">
-            <img
-              src="/ressources/images/carrousel1.webp"
-              alt={t('Bannière illustrative', 'Illustrative Banner')}
-              className="w-full h-64 md:h-96 object-cover object-bottom"
-            />
           </div>
         </div>
       </Section>

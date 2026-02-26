@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, AlertTriangle, Phone, ShieldAlert } from 'lucide-react'
@@ -7,8 +7,20 @@ import { useLanguage } from '../context/LanguageContext'
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [emergencyOpen, setEmergencyOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { lang, toggleLanguage, t } = useLanguage()
   const location = useLocation()
+
+  const isHome = location.pathname === '/'
+  // Pages that have a dark hero where the navbar should be transparent
+  const hasDarkHero = isHome || location.pathname.startsWith('/dr-')
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const navLinks = [
     { to: '/', label: t('Accueil', 'Home') },
@@ -17,9 +29,20 @@ export default function Header() {
     { to: '/dr-guillemin', label: 'Dr Guillemin' },
   ]
 
+  // On pages with dark heroes: transparent header that becomes solid on scroll
+  const transparent = hasDarkHero && !scrolled
+  const headerBg = transparent
+    ? 'bg-transparent border-transparent'
+    : 'bg-white/80 backdrop-blur-lg border-gray-100 shadow-sm'
+
+  const textColor = transparent ? 'text-white' : 'text-gray-600'
+  const activeTextColor = transparent ? 'text-white bg-white/15' : 'text-primary bg-primary-50'
+  const hoverColor = transparent ? 'hover:text-white hover:bg-white/10' : 'hover:text-primary hover:bg-gray-50'
+  const logoFilter = transparent ? 'brightness-0 invert' : ''
+
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500 ${headerBg}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -27,7 +50,7 @@ export default function Header() {
               <img
                 src="/ressources/images/logo.png"
                 alt="Logo Sour'Yon"
-                className="h-14 w-auto"
+                className={`h-14 w-auto transition-all duration-500 ${logoFilter}`}
               />
             </Link>
 
@@ -39,8 +62,8 @@ export default function Header() {
                   to={link.to}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     location.pathname === link.to
-                      ? 'text-primary bg-primary-50'
-                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                      ? activeTextColor
+                      : `${textColor} ${hoverColor}`
                   }`}
                 >
                   {link.label}
@@ -52,7 +75,11 @@ export default function Header() {
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gray-200 hover:border-primary/30 hover:bg-primary-50 transition-all text-sm font-medium text-gray-600"
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all text-sm font-medium ${
+                  transparent
+                    ? 'border-white/25 hover:bg-white/10 text-white'
+                    : 'border-gray-200 hover:border-primary/30 hover:bg-primary-50 text-gray-600'
+                }`}
               >
                 <img
                   src={lang === 'fr' ? '/ressources/images/france_flag.png' : '/ressources/images/english_flag.png'}
@@ -80,7 +107,9 @@ export default function Header() {
 
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className={`md:hidden p-2 rounded-lg transition-colors ${
+                  transparent ? 'text-white hover:bg-white/10' : 'hover:bg-gray-100'
+                }`}
                 aria-label="Menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
